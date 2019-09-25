@@ -1,8 +1,11 @@
 package com.herokuapp.theinternet;
 
+import org.openqa.selenium.By;
 //Import Web Driver and Chrome Driver
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 //Import test annotation
 import org.testng.annotations.Test;
 
@@ -11,12 +14,12 @@ import org.testng.annotations.Test;
  */
 
 public class PositiveTest {
-	
-	//Add Test annotation
+
+	// Add Test annotation
 	@Test
 	public void loginTest() {
 		System.out.println("Start Login Page test.");
-		
+
 		// Create Chrom driver instance that perform command with
 		// Name of the driver and path
 		System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
@@ -25,34 +28,56 @@ public class PositiveTest {
 		// Maximize the browser
 		driver.manage().window().maximize();
 
-		//Open test page
+		// Open test page
 		String url = "https://the-internet.herokuapp.com/login";
 		driver.get(url);
-		//log to console
+		// log to console
 		System.out.println("URL is opened");
 
 		// Sleep 3 sec for visual check by human
-		sleep(3000);
-		
+		// sleep(3000);
 
+		// Enter user name
+		WebElement username = driver.findElement(By.id("username"));
+		username.sendKeys("tomsmith");
 
-//		Enter user name
-//		Enter password
-//		Click Login button
+		// Enter password
+		WebElement password = driver.findElement(By.name("password"));
+		password.sendKeys("SuperSecretPassword!");
 
-//		Verifications: 
-//		Correct URL
-//		Logout button exists
-//		Correct message
-		
-		//Close browser
+		// Click Login button
+		WebElement loginbutton = driver.findElement(By.tagName("button"));
+		loginbutton.click();
+
+		// Verifications:
+		// Correct URL
+		String expectedUrl = "https://the-internet.herokuapp.com/secure";
+		String actualUrl = driver.getCurrentUrl();
+		Assert.assertEquals(actualUrl, expectedUrl, "Page URL mismatch.");
+
+		// Logout button exists
+		WebElement logoutbutton = driver.findElement(By.xpath("//a[@class='button secondary radius']"));
+		Assert.assertTrue(logoutbutton.isDisplayed(), "Logout button is not visible.");
+
+		// Correct message
+		// WebElement successMsg = driver.findElement(By.cssSelector("#flash"));
+		WebElement successMsg = driver.findElement(By.className("success"));
+		String expectedMessage = "You logged into a secure area!";
+		String actualMessage = successMsg.getText();
+		// Exact comparison
+		// Assert.assertEquals(actualMessage, expectedMessage, "Actual message is not
+		// the same with expected.");
+		// Contains comparison
+		Assert.assertTrue(actualMessage.contains(expectedMessage),
+				"Actual message is not contain expected message.\nActual Message: " + actualMessage);
+
+		// Close browser
 		driver.quit();
 
 	}
 
-	
 	private void sleep(long m) {
-		//Slows down test 
+		// Slows down test
 		try {
 			Thread.sleep(m);
 		} catch (InterruptedException e) {
