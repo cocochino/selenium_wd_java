@@ -11,7 +11,12 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
+<<<<<<< HEAD
 			<version>7.7.1</version>
+=======
+			<version>7.5.1</version>
+			<scope>test</scope>
+>>>>>>> 4119190c0582a7ce3a1901e3279ed94f0a7e1386
 		</dependency>
 		<!--https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 		<dependency>
