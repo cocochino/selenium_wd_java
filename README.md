@@ -1,2 +1,2 @@
 # Selenium WebDriver for Java
-Tutorial files from https://www.udemy.com/course/selenium-for-beginners
+Tutorial files from Udemy https://www.udemy.com/course/selenium-for-beginners
